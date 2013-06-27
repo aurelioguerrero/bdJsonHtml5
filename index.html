@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Prueba BD</title>
+<script type="text/javascript" src="lib/jquery-1.8.3.js" ></script>
+<script>	
+$(document).ready(function(e){
+		try{
+			console.log("Llamado");
+			$.ajax({
+				url : 'http://127.0.0.1/pruebaAjaxServidor/controlador.php',
+				type : 'GET',
+				data : {accion : 'consultarTodo'},
+				dataType : 'json',
+				success : function(resp){
+							try{
+								console.log("Metodo de exito");
+								var reg = resp.datos;
+								var i;
+								
+								for(i = 0; i <= reg.length -1; i++)
+								{
+									agregarFila(reg[i].id,reg[i].nombre,reg[i].apellido,reg[i].telefono);
+								}
+							}catch(err){alert("Error el metodo de exito: "+err);}
+							},
+				error: function(jqXHR, status, error){
+							alert('Error en la funcion de error: '+error+jqXHR);
+							}
+			});		
+		}catch(err){alert(err)};
+	});
+	
+	function registrar()
+	{
+		var idreg = document.getElementById('id').value;
+		
+		if(idreg)
+			actualizar(idreg);
+		else
+			guardar();
+	}
+	
+	function actualizar(idReg)
+	{
+		var valnombre = document.getElementById('nombre').value;
+		var valapellido = document.getElementById('apellido').value;
+		var valtelefono = document.getElementById('telefono').value;
+		
+		try{
+			console.log("Llamado");
+			$.ajax({
+				url : 'http://127.0.0.1/pruebaAjaxServidor/controlador.php',
+				type : 'GET',
+				data : {accion : 'actualizar', id: idReg, nombre : valnombre, apellido : valapellido, telefono : valtelefono},
+				dataType : 'json',
+				success : function(resp){
+							try{
+								console.log("Metodo de exito");
+								if(resp.respuesta == "exito")
+								{
+									var reg = resp.datos;	
+									limpiar();							
+									actualizarFila(reg[0].id,reg[0].nombre,reg[0].apellido,reg[0].telefono);	
+								}
+								else
+								{
+									alert('Error al intentar guardar: '+resp.mensaje);
+								}
+							}catch(err){alert("Error el metodo de exito: "+err);}
+							},
+				error: function(jqXHR, status, error){
+							alert('Error en la funcion de error: '+error+jqXHR);
+							}
+			});		
+		}catch(err){alert(err)};
+	}
+	
+	function guardar()
+	{
+		
+		var valnombre = document.getElementById('nombre').value;
+		var valapellido = document.getElementById('apellido').value;
+		var valtelefono = document.getElementById('telefono').value;		
+		
+		try{
+			console.log("Llamado");
+			$.ajax({
+				url : 'http://127.0.0.1/pruebaAjaxServidor/controlador.php',
+				type : 'GET',
+				data : {accion : 'guardar', nombre : valnombre, apellido : valapellido, telefono : valtelefono},
+				dataType : 'json',
+				success : function(resp){
+							try{
+								console.log("Metodo de exito");
+								if(resp.respuesta == "exito")
+								{
+									var reg = resp.datos;	
+									limpiar();							
+									agregarFila(reg[0].id,reg[0].nombre,reg[0].apellido,reg[0].telefono);	
+								}
+								else
+								{
+									alert('Error al intentar guardar: '+resp.mensaje);
+								}
+							}catch(err){alert("Error el metodo de exito: "+err);}
+							},
+				error: function(jqXHR, status, error){
+							alert('Error en la funcion de error: '+error+jqXHR);
+							}
+			});		
+		}catch(err){alert(err)};			
+	}
+	
+	function agregarFila(valid, valnombre, valapellido, valtelefono)
+	{
+		var tabla = document.getElementById('tabla');
+		var fila = document.createElement('tr');
+		    fila.id = valid;
+		var colNombre = document.createElement('td');
+		var colApellido = document.createElement('td');
+		var colTelefono = document.createElement('td');
+		var colEliminar = document.createElement('td');
+		var vinEliminar = document.createElement('a');
+		var nombre = document.createTextNode(valnombre);
+		var apellido = document.createTextNode(valapellido);
+		var telefono = document.createTextNode(valtelefono);
+		var eliminar = document.createTextNode('Eliminar');
+		
+		fila.onclick = function (){	
+					try{
+						console.log("Llamado");
+						$.ajax({
+						url : 'http://127.0.0.1/pruebaAjaxServidor/controlador.php',
+						type : 'GET',
+						data : {accion : 'consultar', id : valid},
+						dataType : 'json',
+						success : function(resp){
+										try{
+											console.log("Metodo de exito");
+											if(resp.respuesta == "exito")
+											{
+												var reg = resp.datos;								
+												//agregarFila(reg[0].id,reg[0].nombre,reg[0].apellido,reg[0].telefono);
+												document.getElementById('id').value = reg[0].id;
+												document.getElementById('nombre').value = reg[0].nombre;
+												document.getElementById('apellido').value = reg[0].apellido;
+												document.getElementById('telefono').value = reg[0].telefono;		
+											}
+											else
+											{
+												alert('Error al cargar el registro: '+resp.mensaje);
+											}
+										}catch(err){alert("Error el metodo de exito: "+err);}
+						},
+						error: function(jqXHR, status, error){
+										alert('Error en la funcion de error: '+error+jqXHR);
+									}
+						});		
+					}catch(err){alert(err)};							
+		}
+					
+		colNombre.appendChild(nombre);
+		colApellido.appendChild(apellido);
+		colTelefono.appendChild(telefono);
+		vinEliminar.href = '#';
+		vinEliminar.appendChild(eliminar);
+		vinEliminar.onclick = function()
+								{
+									if(confirm('Seguro desea eliminar este registro?'))
+									{
+										try{
+											console.log("Llamado");
+											$.ajax({
+												url : 'http://127.0.0.1/pruebaAjaxServidor/controlador.php',
+												type : 'GET',
+												data : {accion : 'eliminar', id : valid},
+												dataType : 'json',
+												success : function(resp){
+															try{
+																console.log("Metodo de exito");
+																if(resp.respuesta == "exito")
+																{
+																	var fila = document.getElementById(valid);
+																	var tabla = document.getElementById('tabla');
+																	tabla.removeChild(fila);
+																	limpiar();	
+																}
+																else
+																{
+																	alert('Error al eliminar el registro: '+resp.mensaje);
+																}
+															}catch(err){alert("Error el metodo de exito: "+err);}
+															},
+												error: function(jqXHR, status, error){
+															alert('Error en la funcion de error: '+error+jqXHR);
+															}
+											});		
+										}catch(err){alert(err)};										
+									}
+								};
+		colEliminar.appendChild(vinEliminar);
+		fila.appendChild(colNombre);
+		fila.appendChild(colApellido);
+		fila.appendChild(colTelefono);
+		fila.appendChild(colEliminar);
+					
+		tabla.appendChild(fila);
+	}
+	
+	function actualizarFila(idFila, nombre, apellido, telefono)
+	{
+		var fila = document.getElementById(idFila);
+		fila.childNodes[0].innerHTML = nombre;
+		fila.childNodes[1].innerHTML = apellido;
+		fila.childNodes[2].innerHTML = telefono;
+	}
+	
+	function limpiar()
+	{
+		document.getElementById('nombre').value = '';
+		document.getElementById('apellido').value = '';
+		document.getElementById('telefono').value = '';
+		document.getElementById('id').value = '';
+	}
+</script>
+</head>
+
+<body>
+Nombre<br>
+<input type="text" id="nombre"><br>
+Apellido<br>
+<input type="text" id="apellido"><br>
+Tel&eacute;fono<br>
+<input type="tel" id="telefono"><br>
+<input type="hidden" id="id">
+<input type="button" value="Guardar" onClick="registrar()">
+<input type="button" value="Limpiar" onClick="limpiar()"><br>
+<p>
+<table id="tabla" border="1" style="border-collapse:collapse">
+	<tr>
+    	<th>NOMBRE</th>
+        <th>APELLIDO</th>
+        <th>TEL&Eacute;FONO</th>
+        <th>ELIMINAR</th>
+    </tr>
+</table>
+</p>
+</body>
+</html>

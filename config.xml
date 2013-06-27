@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.reactiva.pruebaarchivos"
+        versionCode="10" 
+        version   = "1.0.0">
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>BD SERVIDOR</name>
+
+    <description>
+        Aplicacion desarrollada para probar el manejo de bases de datos con un servidor y Json. 
+    </description>
+
+    <author href="http://www.reactiva.com.co" email="aurelioguerrero@reactiva.com.co">
+        Aurelio Guerrero Rueda. 
+    </author>
+	
+	<icon src="icon.png" />
+	
+	<feature name="http://api.phonegap.com/1.0/file"/>
+</widget>
