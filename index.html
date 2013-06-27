@@ -8,7 +8,7 @@ $(document).ready(function(e){
 		try{
 			console.log("Llamado");
 			$.ajax({
-				url : 'http://127.0.0.1/pruebaAjaxServidor/controlador.php',
+				url : 'http://localhost/pruebaAjaxServidor/controlador.php',
 				type : 'GET',
 				data : {accion : 'consultarTodo'},
 				dataType : 'json',
@@ -50,7 +50,7 @@ $(document).ready(function(e){
 		try{
 			console.log("Llamado");
 			$.ajax({
-				url : 'http://127.0.0.1/pruebaAjaxServidor/controlador.php',
+				url : 'http://localhost/pruebaAjaxServidor/controlador.php',
 				type : 'GET',
 				data : {accion : 'actualizar', id: idReg, nombre : valnombre, apellido : valapellido, telefono : valtelefono},
 				dataType : 'json',
@@ -86,7 +86,7 @@ $(document).ready(function(e){
 		try{
 			console.log("Llamado");
 			$.ajax({
-				url : 'http://127.0.0.1/pruebaAjaxServidor/controlador.php',
+				url : 'http://localhost/pruebaAjaxServidor/controlador.php',
 				type : 'GET',
 				data : {accion : 'guardar', nombre : valnombre, apellido : valapellido, telefono : valtelefono},
 				dataType : 'json',
@@ -131,7 +131,7 @@ $(document).ready(function(e){
 					try{
 						console.log("Llamado");
 						$.ajax({
-						url : 'http://127.0.0.1/pruebaAjaxServidor/controlador.php',
+						url : 'http://localhost/pruebaAjaxServidor/controlador.php',
 						type : 'GET',
 						data : {accion : 'consultar', id : valid},
 						dataType : 'json',
@@ -172,7 +172,7 @@ $(document).ready(function(e){
 										try{
 											console.log("Llamado");
 											$.ajax({
-												url : 'http://127.0.0.1/pruebaAjaxServidor/controlador.php',
+												url : 'http://localhost/pruebaAjaxServidor/controlador.php',
 												type : 'GET',
 												data : {accion : 'eliminar', id : valid},
 												dataType : 'json',
