@@ -4,11 +4,14 @@
 <title>Prueba BD</title>
 <script type="text/javascript" src="lib/jquery-1.8.3.js" ></script>
 <script>	
+
+urlControlador = 'http://www.williamcastrillon.com/chec/aurelio/controlador.php';
+
 $(document).ready(function(e){
 		try{
 			console.log("Llamado");
 			$.ajax({
-				url : 'http://localhost/pruebaAjaxServidor/controlador.php',
+				url : urlControlador,
 				type : 'GET',
 				data : {accion : 'consultarTodo'},
 				dataType : 'json',
@@ -50,7 +53,7 @@ $(document).ready(function(e){
 		try{
 			console.log("Llamado");
 			$.ajax({
-				url : 'http://localhost/pruebaAjaxServidor/controlador.php',
+				url : urlControlador,
 				type : 'GET',
 				data : {accion : 'actualizar', id: idReg, nombre : valnombre, apellido : valapellido, telefono : valtelefono},
 				dataType : 'json',
@@ -86,7 +89,7 @@ $(document).ready(function(e){
 		try{
 			console.log("Llamado");
 			$.ajax({
-				url : 'http://localhost/pruebaAjaxServidor/controlador.php',
+				url : urlControlador,
 				type : 'GET',
 				data : {accion : 'guardar', nombre : valnombre, apellido : valapellido, telefono : valtelefono},
 				dataType : 'json',
@@ -131,7 +134,7 @@ $(document).ready(function(e){
 					try{
 						console.log("Llamado");
 						$.ajax({
-						url : 'http://localhost/pruebaAjaxServidor/controlador.php',
+						url : urlControlador,
 						type : 'GET',
 						data : {accion : 'consultar', id : valid},
 						dataType : 'json',
@@ -172,7 +175,7 @@ $(document).ready(function(e){
 										try{
 											console.log("Llamado");
 											$.ajax({
-												url : 'http://localhost/pruebaAjaxServidor/controlador.php',
+												url : urlControlador,
 												type : 'GET',
 												data : {accion : 'eliminar', id : valid},
 												dataType : 'json',
